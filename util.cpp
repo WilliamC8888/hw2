@@ -16,7 +16,21 @@ std::string convToLower(std::string src)
 std::set<std::string> parseStringToWords(string rawWords)
 {
 
+  std::set<std::string> words;
+  rawWords= convToLower(rawWords);
+  int count=0;
+  for(int i=0;i<rawWords.size();i++){
+    if(rawWords[i]==' '){
+      if(rawWords.substr(i-count, count).size()>=2){
+        words.insert(trim(rawWords.substr(i-count, count)));
+      }
 
+      count=0;
+    }
+    else{
+      count++;
+    }
+  }
 
 
 
