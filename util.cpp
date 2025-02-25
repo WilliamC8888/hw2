@@ -15,57 +15,52 @@ std::string convToLower(std::string src)
     to a set of words based on the criteria given in the assignment **/
 std::set<std::string> parseStringToWords(string rawWords)
 {
+    std::set<std::string> wordList;
+    std::string temp;
 
-  std::set<std::string> words;
-  rawWords= convToLower(rawWords);
-  int count=0;
-  for(int i=0;i<rawWords.size();i++){
-    if(rawWords[i]==' '){
-      if(rawWords.substr(i-count, count).size()>=2){
-        words.insert(trim(rawWords.substr(i-count, count)));
-      }
-
-      count=0;
+    for (size_t i = 0; i < rawWords.size(); i++) {
+        if (isalnum(rawWords[i])) {
+            temp += rawWords[i];  
+        } else {
+            if (temp.length() >= 2) {
+                wordList.insert(convToLower(temp));  
+            }
+            temp = "";  
+        }
     }
-    else{
-      count++;
+    if (temp.length() >= 2) { 
+        wordList.insert(convToLower(temp));
     }
-  }
-
-
-
-
-
-
-
+    return wordList;
 
 }
-
 /**************************************************
  * COMPLETED - You may use the following functions
  **************************************************/
 
 // Used from http://stackoverflow.com/questions/216823/whats-the-best-way-to-trim-stdstring
 // trim from start
-std::string &ltrim(std::string &s) {
-    s.erase(s.begin(), 
-	    std::find_if(s.begin(), 
-			 s.end(), 
-			 std::not1(std::ptr_fun<int, int>(std::isspace))));
-    return s;
+
+#include <algorithm> 
+#include <cctype>
+#include <locale>
+
+// trim. Pulled updated version off the above web page because the one provided didnt work with my version of c++
+inline void ltrim(std::string &s) {
+    s.erase(s.begin(), std::find_if(s.begin(), s.end(), [](unsigned char ch) {
+        return !std::isspace(ch);
+    }));
 }
 
-// trim from end
-std::string &rtrim(std::string &s) {
-    s.erase(
-	    std::find_if(s.rbegin(), 
-			 s.rend(), 
-			 std::not1(std::ptr_fun<int, int>(std::isspace))).base(), 
-	    s.end());
-    return s;
+
+inline void rtrim(std::string &s) {
+    s.erase(std::find_if(s.rbegin(), s.rend(), [](unsigned char ch) {
+        return !std::isspace(ch);
+    }).base(), s.end());
 }
 
-// trim from both ends
-std::string &trim(std::string &s) {
-    return ltrim(rtrim(s));
+
+inline void trim(std::string &s) {
+    rtrim(s);
+    ltrim(s);
 }
