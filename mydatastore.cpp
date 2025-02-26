@@ -98,12 +98,12 @@ void MyDataStore::viewCart(string username) {
 void MyDataStore::addToCart(string username, Product* p){
     username = convToLower(username);
     if (users_.find(username) == users_.end()){
-        cout << "Invalid user" << endl;
+        cout << "Invalid username" << endl;
         return;
     }
 
     if (p == nullptr) {
-        cout << "Invalid" << endl;
+        cout << "Invalid request" << endl;
         return;
     }
     carts_[username].push_back(p);
@@ -113,7 +113,7 @@ void MyDataStore::addToCart(string username, Product* p){
 void MyDataStore::buyCart(string username) {
     username = convToLower(username);
     if (users_.find(username) == users_.end()) {
-        cout << "Invalid user" << endl;
+        cout << "Invalid username" << endl;
         return;
     }
     User* user = users_[username];

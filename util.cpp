@@ -46,21 +46,21 @@ std::set<std::string> parseStringToWords(string rawWords)
 #include <locale>
 
 // trim. Pulled updated version off the above web page because the one provided didnt work with my version of c++
-inline void ltrim(std::string &s) {
+void ltrim(std::string &s) {
     s.erase(s.begin(), std::find_if(s.begin(), s.end(), [](unsigned char ch) {
         return !std::isspace(ch);
     }));
 }
 
 
-inline void rtrim(std::string &s) {
+void rtrim(std::string &s) {
     s.erase(std::find_if(s.rbegin(), s.rend(), [](unsigned char ch) {
         return !std::isspace(ch);
     }).base(), s.end());
 }
 
 
-inline void trim(std::string &s) {
+void trim(std::string &s) {
     rtrim(s);
     ltrim(s);
 }
